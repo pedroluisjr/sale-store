@@ -1,0 +1,35 @@
+Realizar a criação do back-end de um e-commerce básico.
+
+1-Criação de endpoint de usuários(GET - POST - PUT).
+
+2-Criação do login -> retornar uma chave JWT para autenticação(Bearer Token).
+
+3-Criação do endpoint de lojas(GET - POST - PUT).
+
+4-Criação do endpoint de produtos(GET - POST - PUT) (DELETE - se o produto não possuir nenhum vinculo com vendas).
+Campos: Código do produto*, nome do produto*, Data da criação**, Data da atualização**, tamanho*, marca*, tipo*, preço de compra,
+preço de venda(se enviado null atribuir o valor 0) e ativo ou inativo(Se enviado null atribuir o valor true).
+
+5-Criação do endpoint de clientes(GET - POST - PUT) (DELETE - se o cliente não possuir nenhum vinculo com vendas).
+Campos: Nome*, Data da criação**, Data da atualização**, CPF(Válidar)*, CNPJ(Válidar)*, IE, Endereço(CEP, BAIRRO, CIDADE, NÚMERO)*,
+Telefone, Celular e ativo ou inativo(Se enviado null atribuir o valor true).
+
+6-Criação do endpoint de funcionários(GET - POST - PUT) (DELETE - se o funcionario não possuir nenhum vinculo com vendas).
+Campos: Nome*, Data da criação**, Data da atualização**, CPF, Telefone, Celular, RG.
+
+7-Atribuir permissões aos usuários do sistema.
+Como: ADMIN, Vendedor, Gerente e Caixa.
+
+8-Criação do endpoint de vendas(GET - POST - PUT) (DELETE - se a venda não estiver recebida).
+Campos: Produto*, Funcionário(Somente vendedor)*, Cliente, Recebimento, Data da criação**, Data da atualização**.
+
+8.1-Criação do endpoint para recebimentos(GET - POST - PUT - DELETE)
+Campos: Número da Venda**(Deve vir automaticamente ao finalizar uma venda), Valor, Data da criação**, Data da atualização**.
+
+Legenda: * == Campo obrigatório, ** == Campo será informado automaticamente.
+
+9-Realizar testes unitários com Mockito.
+
+10-Documentar API com Swagger.
+
+11-Realizar envio de email de confirmação com RabbitMQ.

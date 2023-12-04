@@ -1,0 +1,16 @@
+server:
+  port: 4321
+
+spring:
+  jpa:
+    database: postgresql
+    show-sql: true
+    generate-ddl: false
+    hibernate:
+      ddl-auto: update #validate - update - none - create - create-drop
+      default_schema: public
+  datasource:
+    driverClassName: org.postgresql.Driver
+    username: postgres
+    password: mysecretpassword
+    url: jdbc:postgresql://127.0.0.1/postgres?currentschema=public
