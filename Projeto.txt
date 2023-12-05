@@ -1,4 +1,4 @@
-Realizar a criação do back-end de um e-commerce básico.
+Realizar a criação do back-end de um ERP básico.
 
 1-Criação de endpoint de usuários(GET - POST - PUT).
 
