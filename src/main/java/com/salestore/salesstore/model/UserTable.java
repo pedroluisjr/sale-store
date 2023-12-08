@@ -10,11 +10,14 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "userTable")
+@Schema(name = "User")
 public class UserTable {
 
     @Id
@@ -51,11 +54,11 @@ public class UserTable {
     @Column(name = "createdAt")
     @CreationTimestamp
     @JsonIgnore
-    private Long createdAt;
+    private Date createdAt;
 
     @Column(name = "updatedAt")
     @UpdateTimestamp
     @JsonIgnore
-    private Long updatedAt;
+    private Date updatedAt;
 
 }
