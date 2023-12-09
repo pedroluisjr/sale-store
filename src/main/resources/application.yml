@@ -1,5 +1,7 @@
 server:
   port: 4321
+  error:
+    include-stacktrace: never
 
 spring:
   jpa:

@@ -27,27 +27,23 @@ public class UserTable {
     private Long userId;
 
     @JsonProperty("login")
-    @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
     @Column(name = "login", unique = true, nullable = false)
     private String login;
 
     @JsonProperty("password")
-    @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
+    @JsonIgnore
     @Column(name = "password", nullable = false)
     private String password;
 
     @JsonProperty("email")
-    @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
     @JsonProperty("name")
-    @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
     @Column(name = "name", nullable = false)
     private String name;
 
     @JsonProperty("surname")
-    @Schema(requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     @Column(name = "surname")
     private String surname;
 

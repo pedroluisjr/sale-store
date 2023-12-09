@@ -3,6 +3,8 @@ package com.salestore.salesstore.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.salestore.salesstore.model.UserTable;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,15 +16,19 @@ import org.modelmapper.ModelMapper;
 @Schema(name = "User")
 public class UserDto {
 
+    @NotBlank
     @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
     private String login;
 
+    @NotBlank
     @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
     private String password;
 
+    @NotBlank
     @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
     private String email;
 
+    @NotBlank
     @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
     private String name;
 

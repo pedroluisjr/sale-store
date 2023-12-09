@@ -11,11 +11,7 @@ import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
 @ExtendWith(MockitoExtension.class)
@@ -24,16 +20,8 @@ class UserServiceTest {
     @InjectMocks //Classe que estou realizando os testes.
     private UserService userService;
 
-    @Mock
-    private UserRepository userRepository;
-
-    @Mock
-    private PasswordEncoder passwordEncoder;
-
-    private UserDto userDto;
-
     @Mock //Instancia o objeto na classe UserServiceTest
-    UserTable userTable;
+    private UserRepository userRepository;
 
     @Captor
     private ArgumentCaptor<UserTable> userCaptor; //"Captura" o objeto UserDto, porque estou passando como parâmetro na classe userService.createUser.
@@ -42,7 +30,7 @@ class UserServiceTest {
     void createUserTest() {
 
         //ARRANGE
-        this.userDto = new UserDto("Pedro", "teste123", "pedro@pedro.com.br", "Pedro Luiz", "Silva");
+        UserDto userDto = new UserDto("Pedro", "teste123", "pedro@pedro.com.br", "Pedro Luiz", "Silva");
 
         //ACT
         userService.createUser(userDto);
