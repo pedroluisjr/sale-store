@@ -44,7 +44,6 @@ class UserServiceTest {
         Assertions.assertEquals(userDto.getEmail(), savedUser.getEmail());
         Assertions.assertEquals(userDto.getSurname(), savedUser.getSurname());
 
-
     }
 
 }

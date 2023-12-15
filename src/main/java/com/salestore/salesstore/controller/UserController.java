@@ -1,5 +1,6 @@
 package com.salestore.salesstore.controller;
 
+import com.salestore.salesstore.dto.UserAttDto;
 import com.salestore.salesstore.dto.UserDto;
 import com.salestore.salesstore.exception.ErrorMessage;
 import com.salestore.salesstore.model.UserTable;
@@ -66,6 +67,16 @@ public class UserController {
             return ResponseEntity.ok(userService.findUserById(id).getBody());
         } catch (ErrorMessage errorMessage) {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping(value = "/{id}" ,consumes = { "application/json", "application/x-www-form-urlencoded" })
+    public ResponseEntity<String> attUser(@PathVariable("id")Long id, UserAttDto userAttDto){
+        try {
+            userService.attUser(id, userAttDto);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (ErrorMessage errorMessage) {
+            return ResponseEntity.badRequest().body(errorMessage.getMessage());
         }
     }
 

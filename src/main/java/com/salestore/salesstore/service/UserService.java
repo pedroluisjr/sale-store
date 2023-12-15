@@ -1,5 +1,6 @@
 package com.salestore.salesstore.service;
 
+import com.salestore.salesstore.dto.UserAttDto;
 import com.salestore.salesstore.dto.UserDto;
 import com.salestore.salesstore.exception.ErrorMessage;
 import com.salestore.salesstore.model.UserTable;
@@ -48,13 +49,34 @@ public class UserService {
 
     public ResponseEntity<UserTable> findUserById(Long id) {
 
-        Optional<UserTable> existUser = userRepository.findById(id);;
+        Optional<UserTable> existUser = userRepository.findById(id);
 
         if (existUser.isPresent()){
             return ResponseEntity.of(existUser);
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not in database");
         }
+    }
+
+    public ResponseEntity<UserTable> attUser(Long id, UserAttDto userAttDto) {
+
+        UserTable existingUser = userRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+
+        userRepository.findByEmailAndIdNot(userAttDto.getEmail(), id)
+                .ifPresent(user -> {
+                    throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already in database");
+                });
+
+            existingUser.setEmail(userAttDto.getEmail());
+            existingUser.setName(userAttDto.getName());
+            existingUser.setPassword(userAttDto.getPassword());
+            existingUser.setSurname(userAttDto.getSurname());
+
+            userRepository.save(existingUser);
+
+            return ResponseEntity.ok().build();
+
     }
 
 }
