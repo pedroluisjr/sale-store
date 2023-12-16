@@ -2,7 +2,6 @@ package com.salestore.salesstore.service;
 
 import com.salestore.salesstore.dto.UserAttDto;
 import com.salestore.salesstore.dto.UserDto;
-import com.salestore.salesstore.exception.ErrorMessage;
 import com.salestore.salesstore.model.UserTable;
 import com.salestore.salesstore.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -35,47 +31,42 @@ public class UserService {
 
     public void createUser (UserDto userDto) {
 
-        Optional<UserTable> user = userRepository.existsByLoginOrEmail(userDto.getLogin(), userDto.getEmail());
+        if (userRepository.existsByLoginOrEmail(userDto.getLogin(), userDto.getEmail())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Login or email already in the database");
+        } //Verificado se o login ou email já existe no banco.
 
-        if (user.isEmpty()) {
             userDto.setPassword(passwordEncoder().encode(userDto.getPassword()));
             userRepository.save(userDto.toUser());
             ResponseEntity.status(HttpStatus.CREATED).build();
-        } else {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Login or email already in database");
-        }
 
     }
 
     public ResponseEntity<UserTable> findUserById(Long id) {
 
-        Optional<UserTable> existUser = userRepository.findById(id);
-
-        if (existUser.isPresent()){
-            return ResponseEntity.of(existUser);
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not in database");
-        }
-    }
-
-    public ResponseEntity<UserTable> attUser(Long id, UserAttDto userAttDto) {
-
-        UserTable existingUser = userRepository.findById(id)
+        UserTable existUser = userRepository.findById(id) //Verifica se o id do usuário existe, caso não exista retorna not found.
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
-        userRepository.findByEmailAndIdNot(userAttDto.getEmail(), id)
+            return ResponseEntity.ok(existUser);
+    }
+
+    public void attUser(Long id, UserAttDto userAttDto) {
+
+        UserTable existingUser = userRepository.findById(id) //Verifica se o id do usuário existe, caso não exista retorna not found.
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+
+        userRepository.findByEmailAndIdNot(userAttDto.getEmail(), id) //Verifica se o email existe em outros id's além do enviado na request
                 .ifPresent(user -> {
-                    throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already in database");
+                    throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already in database"); //Caso exista retorna Status.CONFLICT
                 });
 
             existingUser.setEmail(userAttDto.getEmail());
             existingUser.setName(userAttDto.getName());
-            existingUser.setPassword(userAttDto.getPassword());
+            existingUser.setPassword(passwordEncoder().encode(userAttDto.getPassword())); //Pega a senha enviada no userAttDto e realiza o encode e salva no objeto existingUser
             existingUser.setSurname(userAttDto.getSurname());
 
-            userRepository.save(existingUser);
+            userRepository.save(existingUser); //Salva o existingUser no banco
 
-            return ResponseEntity.ok().build();
+        ResponseEntity.ok().build();
 
     }
 

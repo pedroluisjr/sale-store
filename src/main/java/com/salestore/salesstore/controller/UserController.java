@@ -18,8 +18,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
@@ -40,7 +38,7 @@ public class UserController {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = UserTable.class))
             })
     })
-    @PostMapping(consumes = { "application/json", "application/x-www-form-urlencoded" })
+    @PostMapping(produces = "application/json", consumes = { "application/json", "application/x-www-form-urlencoded" })
     @Parameter(description = "Create a user", required = true)
     @Transactional
     public ResponseEntity<String> createUser(@Valid @RequestBody UserDto userDto) {
@@ -54,14 +52,14 @@ public class UserController {
 
     @Operation(summary = "Retrieve user")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "User exist", content = {
+            @ApiResponse(responseCode = "200", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = UserTable.class))
             }),
             @ApiResponse(responseCode = "404", description = "User not found in database", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = UserTable.class))
             })
     })
-    @GetMapping(value = "/{id}", consumes = { "application/json", "application/x-www-form-urlencoded" })
+    @GetMapping("/{id}")
     public ResponseEntity<UserTable> getUserById(@PathVariable("id") Long id) {
         try {
             return ResponseEntity.ok(userService.findUserById(id).getBody());
@@ -70,8 +68,20 @@ public class UserController {
         }
     }
 
-    @PutMapping(value = "/{id}" ,consumes = { "application/json", "application/x-www-form-urlencoded" })
-    public ResponseEntity<String> attUser(@PathVariable("id")Long id, UserAttDto userAttDto){
+    @Operation(summary = "Update user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User updated", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = UserAttDto.class))
+            }),
+            @ApiResponse(responseCode = "409", description = "Email already in database", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = UserAttDto.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Bad request to API", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))
+            })
+    })
+    @PutMapping(value = "/{id}", produces = "application/json", consumes = { "application/json", "application/x-www-form-urlencoded" })
+    public ResponseEntity<String> attUser(@PathVariable("id")Long id, @RequestBody UserAttDto userAttDto){
         try {
             userService.attUser(id, userAttDto);
             return ResponseEntity.status(HttpStatus.OK).build();
