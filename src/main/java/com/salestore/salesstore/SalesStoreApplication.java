@@ -12,7 +12,6 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 		title = "Stores API",
 		description = "ERP Store for studying Spring Boot",
 		version = "0.0.1"))
-@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 public class SalesStoreApplication {
 
 	public static void main(String[] args) {
