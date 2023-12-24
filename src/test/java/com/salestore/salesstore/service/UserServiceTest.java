@@ -30,7 +30,7 @@ class UserServiceTest {
     void createUserTest() {
 
         //ARRANGE
-        UserDto userDto = new UserDto("Pedro", "teste123", "pedro@pedro.com.br", "Pedro Luiz", "Silva");
+        UserDto userDto = new UserDto("Pedro", "teste123", "pedro@pedro.com.br", "Pedro Luiz", "Silva", "admin");
 
         //ACT
         userService.createUser(userDto);

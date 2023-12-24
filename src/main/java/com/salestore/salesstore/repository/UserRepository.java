@@ -11,14 +11,14 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<UserTable, Long> {
 
-//    @Query(value = "SELECT u FROM UserTable u WHERE u.login = :login OR u.email = :email") //Select é efetuado pelo nome da classe.
+//    @Query(value = "SELECT u FROM userTable u WHERE u.login = :login OR u.email = :email") //Select é efetuado pelo nome da classe.
     boolean existsByLoginOrEmail(String login, String email);
 
-    Optional<UserTable> findByLogin(String login);
+    UserTable findByLogin(String login);
 
     Optional<UserTable> findByName(String name);
 
-    @Query("SELECT u FROM UserTable u WHERE u.email = :email AND u.id <> :id")
-    Optional<UserTable> findByEmailAndIdNot(@Param("email") String email, @Param("id") Long id);
+    @Query("SELECT u FROM userTable u WHERE u.email = :email AND u.id <> :id")
+    Optional<UserTable> findByEmailOrId(String email, Long id);
 
 }

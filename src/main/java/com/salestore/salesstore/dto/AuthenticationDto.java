@@ -5,19 +5,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-@Schema(name = "User Actualization")
-public class UserAttDto {
+public class AuthenticationDto {
 
+    @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
+    private String login;
+
+    @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
     private String password;
 
-    private String email;
-
-    private String name;
-
-    private String surname;
-
-    private String role;
 }
