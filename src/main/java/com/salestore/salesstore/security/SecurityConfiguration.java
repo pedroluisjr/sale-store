@@ -44,7 +44,6 @@ public class SecurityConfiguration {
             "/swagger-ui/**",
             "/auth/register",
             "/auth/login"
-            // other public endpoints of your API may be appended to this array
     };
 
     private static final String[] AUTH_USER = {

@@ -1,9 +1,10 @@
 Realizar a criação do back-end de um ERP básico.
 
-1-Criação de endpoint de usuários(GET - POST - PUT).
+1-Criação de endpoint de usuários(GET - POST - PUT). - OK
 
-2-Criação do login -> retornar uma chave JWT para autenticação(Bearer Token).
+2-Criação do login -> retornar uma chave JWT para autenticação(Bearer Token). - OK
 
+//TODO: Realizar o endpoint de lojas.
 3-Criação do endpoint de lojas(GET - POST - PUT).
 
 4-Criação do endpoint de produtos(GET - POST - PUT) (DELETE - se o produto não possuir nenhum vinculo com vendas).
